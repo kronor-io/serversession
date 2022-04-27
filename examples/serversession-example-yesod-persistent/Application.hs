@@ -32,7 +32,10 @@ import System.Log.FastLogger                (defaultBufSize, newStdoutLoggerSet,
 
 import qualified Data.Proxy as P
 import qualified Web.ServerSession.Core as SS
+import Web.ServerSession.Backend.Persistent.Internal.Impl (PersistentSession(..))
 import qualified Web.ServerSession.Backend.Persistent as SS
+import Database.Persist.Quasi.Internal
+import Database.Persist.Sql.Migration
 
 -- Import all relevant handler modules here.
 -- Don't forget to add new modules to your cabal file!
@@ -47,7 +50,8 @@ mkYesodDispatch "App" resourcesApp
 
 -- Create migration function using both our entities and
 -- serversession-backend-persistent ones.
-mkMigrate "migrateAll" (SS.serverSessionDefs (P.Proxy :: P.Proxy SS.SessionMap) ++ entityDefs)
+migrateAll :: Migration
+migrateAll = migrateModels $ SS.serverSessionDefs (P.Proxy :: P.Proxy SS.SessionMap) ++ entityDefs
 
 
 -- | This function allocates resources (such as a database connection pool),
