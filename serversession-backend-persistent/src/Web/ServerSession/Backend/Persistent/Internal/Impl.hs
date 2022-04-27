@@ -86,7 +86,7 @@ instance forall sess. P.PersistFieldSql (Decomposed sess) => P.PersistEntity (Pe
     = P.EntityDef
         (P.EntityNameHS "PersistentSession")
         (P.EntityNameDB "persistent_session")
-        (P.EntityIdField $ pfd PersistentSessionId)
+        (P.EntityIdNaturalKey idComposite)
         ["json"]
         [ pfd PersistentSessionKey
         , pfd PersistentSessionAuthId
@@ -102,6 +102,21 @@ instance forall sess. P.PersistFieldSql (Decomposed sess) => P.PersistEntity (Pe
     where
       pfd :: P.EntityField (PersistentSession sess) typ -> P.FieldDef
       pfd = P.persistFieldDef
+      idComposite = P.CompositeDef
+        (P.FieldDef
+          (P.FieldNameHS "key")
+          (P.FieldNameDB "key")
+          (P.FTTypeCon Nothing "SessionId")
+          (P.SqlOther "SqlType unset for key")
+          []
+          True
+          P.NoReference
+          (P.FieldCascade Nothing Nothing)
+          Nothing
+          Nothing
+          True
+        :| [])
+        []
 
   toPersistFields (PersistentSession a b c d e) =
     [ P.SomePersistField a
@@ -121,6 +136,7 @@ instance forall sess. P.PersistFieldSql (Decomposed sess) => P.PersistEntity (Pe
       err :: T.Text -> Either T.Text a -> Either T.Text a
       err s (Left r)  = Left $ T.concat ["PersistentSession/fromPersistValues/", s, ": ", r]
       err _ (Right v) = Right v
+    
   fromPersistValues x = Left $ T.pack $ "PersistentSession/fromPersistValues: " ++ show x
 
   persistUniqueToFieldNames _ = error "Degenerate case, should never happen"
@@ -133,29 +149,28 @@ instance forall sess. P.PersistFieldSql (Decomposed sess) => P.PersistEntity (Pe
         (P.FieldNameDB "id")
         (P.FTTypeCon
            Nothing "PersistentSessionId")
-        (P.SqlOther "Composite Reference")
+        (P.SqlOther "Primary Key")
         []
         True
-        (P.CompositeRef
-           (P.CompositeDef
-              (P.FieldDef
-                (P.FieldNameHS "key")
-                (P.FieldNameDB "key")
-                (P.FTTypeCon Nothing "SessionId")
-                (P.SqlOther "SqlType unset for key")
-                []
-                True
-                P.NoReference
-                (P.FieldCascade Nothing Nothing)
-                Nothing
-                Nothing
-                False
-              :| [])
-              []))
+        (P.CompositeRef (P.CompositeDef
+          (P.FieldDef
+            (P.FieldNameHS "key")
+            (P.FieldNameDB "key")
+            (P.FTTypeCon Nothing "SessionId")
+            (P.SqlOther "SqlType unset for key")
+            []
+            True
+            P.NoReference
+            (P.FieldCascade Nothing Nothing)
+            Nothing
+            Nothing
+            True
+          :| [])
+          []))
         (P.FieldCascade Nothing Nothing)
         Nothing
         Nothing
-        False
+        True
   persistFieldDef PersistentSessionKey
     = P.FieldDef
         (P.FieldNameHS "key")
