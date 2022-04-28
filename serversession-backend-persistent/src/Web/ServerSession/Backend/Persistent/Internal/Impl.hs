@@ -190,7 +190,7 @@ instance forall sess. P.PersistFieldSql (Decomposed sess) => P.PersistEntity (Pe
         (P.FieldNameDB "auth_id")
         (P.FTTypeCon Nothing "ByteStringJ")
         (P.sqlType (Proxy :: Proxy ByteStringJ))
-        [P.FieldAttrMaybe, P.FieldAttrDefault "NULL"]
+        [P.FieldAttrMaybe]
         True
         P.NoReference
         (P.FieldCascade Nothing Nothing)
