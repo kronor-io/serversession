@@ -12,12 +12,12 @@ packages:
   original:
     hackage: acid-state-0.16.1@sha256:e236ee7b72ffeda8d49b69549a723f0655b0d1b178951c6cc7a1dc6c92783225,6205
 - completed:
-    hackage: base64-bytestring-1.2.1.0@sha256:50ec0e229255d4c45cbdd568da011311b8887f304b931564886016f4984334d8,2396
+    hackage: base64-bytestring-1.0.0.3@sha256:d5027ea6d63eab27cfa34eb1f5a05b6a5ee521dd176a06da3f7d80e117a88259,2352
     pantry-tree:
-      size: 850
-      sha256: 1154783dd163be45502456716ca44c4244d0aa6e7cf1aa4e7763efb3485a509c
+      size: 848
+      sha256: 8c8b014dec54dc3c779bd43441ef1bee2c3bfc813cc0d7669a0fcda206f6a153
   original:
-    hackage: base64-bytestring-1.2.1.0@sha256:50ec0e229255d4c45cbdd568da011311b8887f304b931564886016f4984334d8,2396
+    hackage: base64-bytestring-1.0.0.3@sha256:d5027ea6d63eab27cfa34eb1f5a05b6a5ee521dd176a06da3f7d80e117a88259,2352
 - completed:
     hackage: classy-prelude-yesod-1.5.0@sha256:8f7e183bdfd6d2ea9674284c4f285294ab086aff60d9be4e5d7d2f3c1a2b05b7,1330
     pantry-tree:
